@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورلد شوب - WORLD SHOP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ff0000; /* لون الخلفية أحمر */
+      color: #eee;
+    }
+    header {
+      background-color: #5b2c6f;
+      padding: 20px;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #dcd6f7;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    main {
+      padding: 20px;
+    }
+    .section {
+      display: none;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #2e294e;
+      border-radius: 12px;
+    }
+    .section.active {
+      display: block;
+    }
+    input, textarea, select, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+    }
+    button {
+      background-color: #9b59b6;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #8e44ad;
+    }
+    .tabs {
+      display: flex;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    .tab-button {
+      flex: 1;
+      background-color: #3b3355;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .tab-button.active {
+      background-color: #9b59b6;
+    }
+    .tab-content {
+      display: none;
+      margin-top: 20px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .notice {
+      background-color: #c0392b;
+      color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1> ورلد شوب | WORLD SHOP</h1>
+    <nav>
+      <a onclick="showSection('home')">الرئيسية</a>
+      <a onclick="showSection('rules')">القوانين</a>
+      <a onclick="showSection('apps')">التقديمات</a>
+    </nav>
+  </header>
+  <main>
+    <section class="section active" id="home">
+      <h2>أهلاً بك في سيرفر ورلد شوب</h2>
+      <p>سيرفر شوب يوجد كل ما تتمناه و أونرز محترمه جدا .</p>
+    </section>
+
+    <section class="section" id="rules">
+      <h2>قوانين السيرفر</h2>
+      <ul>
+        <li>ممنوع النية السيئة</li>
+        <li>احترام الأعضاء والإداريين</li>
+        <li>عدم النصب والالتزام بالقوانين و عدن النصب و عدم الدفع وقد هذا يعرضك لل بان او الطرد في السيرفرات المشاركه معنا</li>
+      </ul>
+      <p style="margin-top:20px; font-weight:bold; color:#e1bfff">|| @everyone ||</p>
+    </section>
+
+    <section class="section" id="apps">
+      <h2>التقديمات</h2>
+      <div class="notice"> تنبيه من المبرمج (كافح المكافح): بعد إرسال الطلب، الرجاء التوجه للتكت في الديسكورد لمتابعة حالته و يجب الضغط علي كلمة (ارسال) مرة واحده فقط.</div>
+      <div class="tabs">
+        <button class="tab-button active" onclick="showTab(this, 'tab-admin')">الادارة</button>
+        <button class="tab-button" onclick="showTab(this, 'tab-silar')">البائع</button>
+      </div>
+
+      <div id="tab-admin" class="tab-content active">
+        <form onsubmit="sendForm(event, 'إداري')">
+          <input type="text" placeholder="اسمك في الديسكورد" required>
+          <input type="text" placeholder="خبراتك بالتفصيل" required>
+          <textarea placeholder="لماذا تريد الانضمام؟" required></textarea>
+          <button type="submit">إرسال</button>
+        </form>
+      </div>
+
+      <div id="tab-silar" class="tab-content">
+        <form onsubmit="sendForm(event, 'بائع')">
+          <input type="text" placeholder=" اسمك في الديسكورد + عمرك" required>
+          <input type="text" placeholder="خبراتك بالبيع" required>
+          <textarea placeholder="وش المنتج + ليش تريد الإنضمام ؟" required></textarea>
+          <button type="submit">إرسال</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function showTab(button, tabId) {
+      const container = button.closest('.section');
+      container.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      container.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      container.querySelector('#' + tabId).classList.add('active');
+    }
+
+    function sendForm(e, القسم) {
+      e.preventDefault();
+      const form = e.target;
+      const inputs = form.querySelectorAll('input, textarea');
+
+      const embedFields = Array.from(inputs).map(input => `**${input.placeholder}:** ${input.value}`).join('\n');
+
+      fetch("https://discord.com/api/webhooks/1372572207401664592/ae5aublbaJhoPJnm4MknLAutqvuRSEPzs_w-tKdpAKh1wePSgx1eOshxX0ckvmPbap-r", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          embeds: [{
+            title: `تقديم ${القسم}`,
+            description: embedFields,
+            color: 15158332, // اللون الأحمر
+            footer: {
+              text: "يرجى التوجه إلى التكت في الديسكورد لمتابعة الطلب."
+            }
+          }]
+        })
+      }).then(() => {
+        alert("تم إرسال الطلب بنجاح. الرجاء التوجه للتكت في الديسكورد.");
+        form.reset();
+      }).catch(() => {
+        alert("حدث خطأ، حاول مرة أخرى.");
+      });
+    }
+  </script>
+</body>
+</html>
